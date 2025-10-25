@@ -1,0 +1,2831 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lumina - Platform Edukasi ABK</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4A6FA5;
+            --primary-light: #6C63FF;
+            --secondary: #FF6B9D;
+            --accent: #FFD166;
+            --light: #F8F9FF;
+            --dark: #2D2B55;
+            --text: #333366;
+            --text-light: #7A7A9D;
+            --border-radius: 16px;
+            --shadow: 0 10px 25px rgba(255, 107, 157, 0.1);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --gradient-primary: linear-gradient(135deg, #4A6FA5 0%, #6C63FF 100%);
+            --gradient-secondary: linear-gradient(135deg, #FF6B9D 0%, #FF8E53 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* Font Minnie 2 untuk disleksia */
+        @font-face {
+            font-family: 'Minnie 2';
+            src: url('https://fonts.cdnfonts.com/s/101538/Minnie2.woff') format('woff');
+        }
+
+        /* Mode Disleksia */
+        body.dyslexia-mode {
+            font-family: 'Minnie 2', sans-serif;
+            letter-spacing: 0.1em;
+            line-height: 1,8;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+            background: var(--gradient-primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 22px;
+            transform: rotate(-5deg);
+        }
+
+        .logo-text {
+            font-size: 28px;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem; /* Diperbesar gap antar item */
+            margin-left: auto; /* Geser ke kanan */
+            padding-right: 1cm; /* Dikurangi dari 3cm ke 1cm agar lebih dekat dengan tombol daftar */
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 600;
+            padding: 0.75rem 1.25rem; /* Diperbesar ukuran padding */
+            border-radius: 50px;
+            transition: var(--transition);
+            position: relative;
+            font-size: 1rem; /* Diperbesar ukuran font */
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--primary);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 3px;
+            background: var(--gradient-secondary);
+            border-radius: 3px;
+            transition: var(--transition);
+            transform: translateX(-50%);
+        }
+
+        nav a:hover::after, nav a.active::after {
+            width: 70%;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: 0 5px 15px rgba(74, 111, 165, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(74, 111, 165, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--gradient-secondary);
+            color: white;
+            box-shadow: 0 5px 15px rgba(255, 107, 157, 0.3);
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 107, 157, 0.4);
+        }
+
+        /* Menu Dropdown */
+        .menu-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .menu-btn {
+            width: 42px; /* Diperkecil */
+            height: 42px; /* Diperkecil */
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-size: 1rem; /* Diperkecil */
+        }
+
+        .menu-btn:hover {
+            background: var(--gradient-secondary);
+            transform: scale(1.1);
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 50px;
+            background: white;
+            min-width: 200px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            border-radius: var(--border-radius);
+            z-index: 1000;
+            overflow: hidden;
+        }
+
+        .dropdown-content.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .dropdown-item {
+            display: block;
+            padding: 1rem 1.5rem;
+            text-decoration: none;
+            color: var(--text);
+            transition: var(--transition);
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-item:hover {
+            background: rgba(74, 111, 165, 0.1);
+            color: var(--primary);
+            padding-left: 2rem;
+        }
+
+        /* Auth Buttons Container */
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        /* Accessibility Controls */
+        .accessibility-controls {
+            position: fixed;
+            bottom: 150px; /* Diturunkan 50px dari sebelumnya */
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .accessibility-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+        }
+
+        .accessibility-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .accessibility-btn.active {
+            background: var(--gradient-secondary);
+        }
+
+        /* Page Styles */
+        .page {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { 
+                opacity: 0; 
+                transform: translateY(20px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #FFFBFA 0%, #F0FAF9 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+            opacity: 0.3;
+            border-radius: 50%;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-text h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+        }
+
+        .hero-text p {
+            font-size: 1.2rem;
+            color: var(--text);
+            margin-bottom: 2rem;
+            opacity: 0.8;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-image {
+            position: relative;
+        }
+
+        .main-illustration {
+            width: 100%;
+            height: 400px;
+            background: var(--gradient-primary);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+
+        .floating-element {
+            position: absolute;
+            background: white;
+            padding: 1rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .element-1 {
+            top: 5%; /* Dinaikkan 2cm dari 10% ke 5% */
+            left: -10%;
+            animation-delay: 0s;
+        }
+
+        .element-2 {
+            bottom: 60%; /* Diturunkan 2cm dari 20% ke 30% */
+            right: -12%;
+            animation-delay: 1s;
+        }
+
+        .element-3 {
+            top: 80%;
+            right: -5%;
+            animation-delay: 2s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Section Title dengan Garis Bawah Simetris */
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--dark);
+            margin-bottom: 1rem;
+            font-weight: 700;
+            display: inline-block;
+            position: relative;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--gradient-secondary);
+            border-radius: 2px;
+        }
+
+        .section-title p {
+            color: var(--text);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 2rem auto 0;
+            opacity: 0.8;
+        }
+
+        /* Features */
+        .features {
+            padding: 80px 0;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2.5rem 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--gradient-secondary);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(255, 107, 157, 0.15);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient-primary);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: white;
+            font-size: 32px;
+            transform: rotate(-5deg);
+        }
+
+        .feature-card h3 {
+            margin-bottom: 1rem;
+            color: var(--dark);
+            font-size: 1.4rem;
+        }
+
+        /* Activities Section */
+        .activities-section {
+            background: var(--light);
+            position: relative;
+            padding: 80px 0;
+        }
+
+        .activities-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" preserveAspectRatio="none"><path fill="rgba(255, 107, 157, 0.03)" d="M0,0 L1000,0 L1000,1000 L0,1000 Z"><animate attributeName="d" dur="25s" repeatCount="indefinite" values="M0,0 L1000,0 L1000,1000 L0,1000 Z; M0,0 L1000,0 L800,800 L0,1000 Z; M0,0 L1000,0 L600,600 L0,1000 Z; M0,0 L1000,0 L800,800 L0,1000 Z; M0,0 L1000,0 L1000,1000 L0,1000 Z"/></path></svg>');
+        }
+
+        .activities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .activity-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .activity-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(255, 107, 157, 0.2);
+        }
+
+        .activity-image {
+            height: 200px;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .activity-content {
+            padding: 25px;
+        }
+
+        .activity-content h3 {
+            margin-bottom: 12px;
+            color: var(--dark);
+            font-size: 1.3rem;
+        }
+
+        .activity-content p {
+            color: var(--text-light);
+            margin-bottom: 20px;
+        }
+
+        .activity-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .tag {
+            background: rgba(255, 107, 157, 0.1);
+            color: var(--secondary);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        /* Progress Section */
+        .progress-container {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 35px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 8px;
+            height: 100%;
+            background: var(--gradient-secondary);
+        }
+
+        .progress-container:hover {
+            transform: translateX(10px);
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .progress-bar {
+            height: 12px;
+            background-color: #f0f4ff;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-secondary);
+            border-radius: 10px;
+            transition: width 1.5s ease-in-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { 
+                transform: translateX(-100%); 
+            }
+            100% { 
+                transform: translateX(100%); 
+            }
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        /* Resources Section */
+        .resources-section {
+            background: var(--gradient-primary);
+            color: white;
+            position: relative;
+            overflow: hidden;
+            padding: 80px 0;
+        }
+
+        .resources-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" preserveAspectRatio="none"><path fill="rgba(255,255,255,0.05)" d="M0,0 L1000,0 L1000,1000 L0,1000 Z"><animate attributeName="d" dur="20s" repeatCount="indefinite" values="M0,0 L1000,0 L1000,1000 L0,1000 Z; M0,0 L1000,0 L800,800 L0,1000 Z; M0,0 L1000,0 L600,600 L0,1000 Z; M0,0 L1000,0 L800,800 L0,1000 Z; M0,0 L1000,0 L1000,1000 L0,1000 Z"/></path></svg>');
+        }
+
+        .resources-section .section-title h2,
+        .resources-section .section-title p {
+            color: white;
+        }
+
+        .resources-section .section-title p {
+            opacity: 0.9;
+        }
+
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .resource-card {
+            background-color: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            transition: var(--transition);
+        }
+
+        .resource-card:hover {
+            transform: translateY(-10px);
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .resource-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .resource-info h3 {
+            margin-bottom: 8px;
+            font-size: 1.2rem;
+        }
+
+        .resource-info p {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        /* Community Section */
+        .community-section {
+            background: var(--light);
+            position: relative;
+            padding: 80px 0;
+        }
+
+        .community-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .community-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .community-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .community-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: white;
+            font-size: 28px;
+        }
+
+        .community-card h3 {
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        /* Forum Section */
+        .forum-section {
+            margin-top: 60px;
+        }
+
+        .forum-container {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .forum-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .forum-topic {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            transition: var(--transition);
+        }
+
+        .forum-topic:hover {
+            background-color: #f9f9ff;
+        }
+
+        .forum-topic h4 {
+            margin-bottom: 8px;
+            color: var(--dark);
+        }
+
+        .forum-meta {
+            display: flex;
+            gap: 15px;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        /* Information Page Styles */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .info-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .info-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--gradient-primary);
+        }
+
+        .info-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(74, 111, 165, 0.2);
+        }
+
+        .info-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-primary);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            color: white;
+            font-size: 24px;
+        }
+
+        .info-card h3 {
+            margin-bottom: 15px;
+            color: var(--dark);
+            font-size: 1.3rem;
+        }
+
+        .info-card ul {
+            list-style-type: none;
+            margin-top: 15px;
+        }
+
+        .info-card li {
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .info-card li::before {
+            content: '•';
+            color: var(--secondary);
+            position: absolute;
+            left: 0;
+        }
+
+        /* Guide Page Styles */
+        .guide-categories {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .guide-category {
+            background: white;
+            padding: 20px 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .guide-category.active {
+            background: var(--gradient-primary);
+            color: white;
+        }
+
+        .guide-category:hover {
+            transform: translateY(-5px);
+        }
+
+        .guide-content {
+            display: none;
+        }
+
+        .guide-content.active {
+            display: block;
+        }
+
+        .guide-item {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .guide-item h3 {
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        /* Services Page Styles */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--gradient-secondary);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(255, 107, 157, 0.2);
+        }
+
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-secondary);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            color: white;
+            font-size: 24px;
+        }
+
+        .service-card h3 {
+            margin-bottom: 15px;
+            color: var(--dark);
+            font-size: 1.3rem;
+        }
+
+        .service-list {
+            list-style-type: none;
+            margin-top: 15px;
+        }
+
+        .service-list li {
+            margin-bottom: 10px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .service-list li::before {
+            content: '✓';
+            color: var(--success);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 80px 0 20px;
+            position: relative;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--gradient-secondary);
+            border-radius: 3px;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-column a {
+            color: #bbbbbb;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-column a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background: var(--gradient-secondary);
+            transform: translateY(-5px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #bbbbbb;
+            font-size: 0.9rem;
+        }
+
+        /* Section Padding */
+        .section {
+            padding: 80px 0;
+        }
+
+        /* Game Styles */
+        .game-container {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+        }
+
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .game-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .puzzle-game {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .puzzle-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .shape-slot {
+            width: 100px;
+            height: 100px;
+            border: 3px dashed #ccc;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .shape-slot.correct {
+            border-color: #4CAF50;
+            background-color: rgba(76, 175, 80, 0.1);
+        }
+
+        .draggable-shapes {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .draggable-shape {
+            width: 80px;
+            height: 80px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: grab;
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+
+        .draggable-shape.dragging {
+            opacity: 0.5;
+            transform: scale(0.9);
+        }
+
+        .shape-red {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .shape-blue {
+            background: #4ecdc4;
+            color: white;
+            border-radius: 50%;
+        }
+
+        .shape-yellow {
+            background: #ffe66d;
+            color: #333;
+            border-radius: 10px;
+        }
+
+        .game-board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .game-cell {
+            width: 80px;
+            height: 80px;
+            background: var(--light);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .game-cell:hover {
+            background: var(--primary-light);
+            color: white;
+        }
+
+        .memory-game {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .memory-card {
+            width: 80px;
+            height: 80px;
+            background: var(--primary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .memory-card.flipped {
+            background: var(--accent);
+            transform: rotateY(180deg);
+        }
+
+        .color-mixer {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .color-display {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: #ff6b6b;
+            margin: 20px 0;
+            transition: background 0.3s ease;
+        }
+
+        .color-sliders {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .slider-container label {
+            min-width: 60px;
+        }
+
+        .slider {
+            flex: 1;
+            height: 8px;
+            -webkit-appearance: none;
+            background: var(--light);
+            border-radius: 4px;
+            outline: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background: var(--primary);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        /* Article Styles */
+        .article-content {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 40px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+            line-height: 1.8;
+        }
+
+        .article-content h3 {
+            color: var(--dark);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .article-content p {
+            margin-bottom: 15px;
+            color: var(--text);
+        }
+
+        .article-content ul {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+
+        .article-content li {
+            margin-bottom: 8px;
+            position: relative;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+            
+            .floating-element {
+                position: relative;
+                margin: 1rem 0;
+            }
+            
+            .element-1, .element-2, .element-3 {
+                position: relative;
+                left: 0;
+                right: 0;
+                margin: 1rem auto;
+            }
+            
+            nav ul {
+                display: none;
+                margin-left: 0;
+                padding-right: 0;
+                justify-content: center;
+            }
+            
+            .guide-categories {
+                flex-direction: column;
+            }
+
+            .auth-buttons {
+                gap: 0.5rem;
+            }
+
+            .game-board, .memory-game {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .puzzle-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .draggable-shapes {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="nav-container">
+                <a href="#" class="logo" onclick="showPage('beranda')">
+                    <div class="logo-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <div class="logo-text">Lumina</div>
+                </a>
+                
+                <nav>
+                    <ul>
+                        <li><a href="#" class="active" onclick="showPage('beranda')">Beranda</a></li>
+                        <li><a href="#" onclick="showPage('informasi')">Informasi</a></li>
+                        <li><a href="#" onclick="showPage('aktivitas')">Aktivitas</a></li>
+                        <li><a href="#" onclick="showPage('progress')">Progress</a></li>
+                        <li><a href="#" onclick="showPage('sumber-belajar')">SumBel</a></li>
+                    </ul>
+                </nav>
+                
+                <div class="auth-buttons">
+                    <button class="btn btn-secondary"><i class="fas fa-user-plus"></i> Daftar</button>
+                    <div class="menu-dropdown">
+                        <button class="menu-btn" id="menuBtn">
+                            <i class="fas fa-bars"></i>
+                        </button>
+                        <div class="dropdown-content" id="dropdownContent">
+                            <a href="#" class="dropdown-item" onclick="showPage('panduan')">
+                                <i class="fas fa-book"></i> Panduan
+                            </a>
+                            <a href="#" class="dropdown-item" onclick="showPage('layanan')">
+                                <i class="fas fa-hand-holding-heart"></i> Layanan
+                            </a>
+                            <a href="#" class="dropdown-item" onclick="showPage('komunitas')">
+                                <i class="fas fa-users"></i> Komunitas
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Accessibility Controls -->
+    <div class="accessibility-controls">
+        <button class="accessibility-btn" id="textToSpeechBtn" title="Text-to-Speech">
+            <i class="fas fa-volume-up"></i>
+        </button>
+        <button class="accessibility-btn" id="dyslexiaModeBtn" title="Mode Disleksia">
+            <i class="fas fa-font"></i>
+        </button>
+    </div>
+
+    <!-- Beranda Page -->
+    <div id="beranda" class="page active">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <h1>Platform Edukasi Modern untuk Anak Berkebutuhan Khusus</h1>
+                        <p>Mendukung tumbuh kembang anak dengan pendekatan personal, interaktif, dan menyenangkan sesuai kebutuhan individu.</p>
+                        <div class="hero-buttons">
+                            <button class="btn btn-secondary" onclick="showPage('aktivitas')">
+                                <i class="fas fa-play-circle"></i>
+                                Mulai Belajar
+                            </button>
+                            <button class="btn btn-primary" onclick="showPage('informasi')">
+                                <i class="fas fa-info-circle"></i>
+                                Pelajari Lebih Lanjut
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="hero-image">
+                        <div class="main-illustration">
+                            Ilustrasi Edukasi ABK
+                        </div>
+                        
+                        <div class="floating-elements">
+                            <div class="floating-element element-1">
+                                <div style="width: 40px; height: 40px; background: var(--accent); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                                    <i class="fas fa-gamepad"></i>
+                                </div>
+                                <div>
+                                    <h4>Game Edukatif</h4>
+                                    <p>Belajar sambil bermain</p>
+                                </div>
+                            </div>
+                            
+                            <div class="floating-element element-2">
+                                <div style="width: 40px; height: 40px; background: var(--primary); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white;">
+                                    <i class="fas fa-chart-bar"></i>
+                                </div>
+                                <div>
+                                    <h4>Progress Report</h4>
+                                    <p>Pantau perkembangan</p>
+                                </div>
+                            </div>
+                            
+                            <div class="floating-element element-3">
+                                <div style="width: 40px; height: 40px; background: var(--secondary); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white;">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <div>
+                                    <h4>Komunitas</h4>
+                                    <p>Dukungan orang tua</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Fitur Utama Kami</h2>
+                    <p>Platform kami dirancang khusus untuk mendukung proses belajar anak berkebutuhan khusus dengan teknologi modern</p>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-puzzle-piece"></i>
+                        </div>
+                        <h3>Aktivitas Interaktif</h3>
+                        <p>Beragam permainan edukatif yang disesuaikan dengan kemampuan dan minat anak dengan animasi menarik.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Pelacakan Progress</h3>
+                        <p>Pantau perkembangan anak dengan laporan detail visual dan rekomendasi pembelajaran yang personal.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3>Komunitas Orang Tua</h3>
+                        <p>Berbagi pengalaman dan tips dengan orang tua lain dalam komunitas yang mendukung dan interaktif.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-user-md"></i>
+                        </div>
+                        <h3>Konsultasi Ahli</h3>
+                        <p>Akses ke psikolog, terapis, dan ahli pendidikan khusus untuk konsultasi online yang mudah diakses.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Informasi Page -->
+    <div id="informasi" class="page">
+        <section class="section">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Informasi ABK</h2>
+                    <p>Kenali berbagai jenis Anak Berkebutuhan Khusus dan cara mengenali ciri-ciri dini</p>
+                </div>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h3>Autisme</h3>
+                        <p>Gangguan perkembangan yang mempengaruhi kemampuan komunikasi, interaksi sosial, dan perilaku.</p>
+                        <ul>
+                            <li>Kesulitan dalam komunikasi verbal dan nonverbal</li>
+                            <li>Minat terbatas dan perilaku repetitif</li>
+                            <li>Hipersensitif terhadap rangsangan sensorik</li>
+                            <li>Kesulitan memahami emosi orang lain</li>
+                        </ul>
+                        <button class="btn btn-primary" style="margin-top: 15px;" onclick="showArticle('autisme')">Baca Artikel Lengkap</button>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <h3>ADHD</h3>
+                        <p>Gangguan perkembangan dengan gejala utama kesulitan memusatkan perhatian, hiperaktif, dan impulsif.</p>
+                        <ul>
+                            <li>Sulit mempertahankan perhatian</li>
+                            <li>Hiperaktif dan gelisah</li>
+                            <li>Bertindak impulsif tanpa berpikir</li>
+                            <li>Sering kehilangan barang</li>
+                        </ul>
+                        <button class="btn btn-primary" style="margin-top: 15px;" onclick="showArticle('adhd')">Baca Artikel Lengkap</button>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <h3>Disleksia</h3>
+                        <p>Gangguan belajar yang mempengaruhi kemampuan membaca, mengeja, dan menulis.</p>
+                        <ul>
+                            <li>Kesulitan mengenali huruf dan bunyi</li>
+                            <li>Membaca dengan lambat dan tidak akurat</li>
+                            <li>Kesulitan mengeja kata-kata</li>
+                            <li>Menghindari aktivitas membaca</li>
+                        </ul>
+                        <button class="btn btn-primary" style="margin-top: 15px;" onclick="showArticle('disleksia')">Baca Artikel Lengkap</button>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-wheelchair"></i>
+                        </div>
+                        <h3>Cerebral Palsy</h3>
+                        <p>Gangguan gerakan, tonus otot, atau postur yang disebabkan oleh kerusakan otak yang belum matang.</p>
+                        <ul>
+                            <li>Kekakuan otot atau refleks berlebihan</li>
+                            <li>Gerakan tidak terkendali</li>
+                            <li>Kesulitan berjalan dan keseimbangan</li>
+                            <li>Keterlambatan perkembangan motorik</li>
+                        </ul>
+                        <button class="btn btn-primary" style="margin-top: 15px;" onclick="showArticle('cerebral-palsy')">Baca Artikel Lengkap</button>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-ear-deaf"></i>
+                        </div>
+                        <h3>Tuna Rungu</h3>
+                        <p>Gangguan pendengaran yang mempengaruhi kemampuan berkomunikasi dan belajar.</p>
+                        <ul>
+                            <li>Tidak merespon ketika dipanggil</li>
+                            <li>Keterlambatan perkembangan bicara</li>
+                            <li>Sering meminta pengulangan kata</li>
+                            <li>Volume suara tidak sesuai</li>
+                        </ul>
+                        <button class="btn btn-primary" style="margin-top: 15px;" onclick="showArticle('tuna-rungu')">Baca Artikel Lengkap</button>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <h3>Tuna Netra</h3>
+                        <p>Gangguan penglihatan yang mempengaruhi kemampuan belajar dan navigasi lingkungan.</p>
+                        <ul>
+                            <li>Kesulitan mengenali wajah atau objek</li>
+                            <li>Sering menabrak benda</li>
+                            <li>Mengedipkan mata berlebihan</li>
+                            <li>Menyipitkan mata saat melihat</li>
+                        </ul>
+                        <button class="btn btn-primary" style="margin-top: 15px;" onclick="showArticle('tuna-netra')">Baca Artikel Lengkap</button>
+                    </div>
+                </div>
+
+                <!-- Articles Section -->
+                <div id="articles-section" style="display: none;">
+                    <div class="section-title">
+                        <h2 id="article-title">Artikel ABK</h2>
+                        <p>Informasi lengkap tentang berbagai jenis Anak Berkebutuhan Khusus</p>
+                    </div>
+                    <div id="article-content" class="article-content">
+                        <!-- Article content will be loaded here -->
+                    </div>
+                    <button class="btn btn-secondary" onclick="hideArticle()">
+                        <i class="fas fa-arrow-left"></i> Kembali ke Daftar ABK
+                    </button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Aktivitas Page -->
+    <div id="aktivitas" class="page">
+        <section class="section activities-section">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Aktivitas Belajar</h2>
+                    <p>Pilih aktivitas yang sesuai dengan kebutuhan dan minat anak dengan antarmuka yang menarik</p>
+                </div>
+                
+                <!-- Game Section -->
+                <div class="section-title">
+                    <h3>Game Edukatif</h3>
+                    <p>Permainan interaktif yang menyenangkan untuk melatih berbagai kemampuan</p>
+                </div>
+                
+                <!-- Game 1: Puzzle Bentuk -->
+                <div class="game-container">
+                    <div class="game-header">
+                        <h3>Puzzle Bentuk dan Warna</h3>
+                        <span id="puzzle-score">Pasangkan bentuk ke tempat yang sesuai!</span>
+                    </div>
+                    <div class="game-content">
+                        <div class="puzzle-game">
+                            <p>Seret bentuk ke tempat yang sesuai!</p>
+                            
+                            <div class="puzzle-container" id="puzzle-container">
+                                <div class="shape-slot" data-shape="red-square">
+                                    <span>🔴 Kotak Merah</span>
+                                </div>
+                                <div class="shape-slot" data-shape="blue-circle">
+                                    <span>🔵 Lingkaran Biru</span>
+                                </div>
+                                <div class="shape-slot" data-shape="yellow-rectangle">
+                                    <span>🟡 Persegi Panjang Kuning</span>
+                                </div>
+                            </div>
+                            
+                            <div class="draggable-shapes">
+                                <div class="draggable-shape shape-red" draggable="true" data-shape="red-square">
+                                    🔴
+                                </div>
+                                <div class="draggable-shape shape-blue" draggable="true" data-shape="blue-circle">
+                                    🔵
+                                </div>
+                                <div class="draggable-shape shape-yellow" draggable="true" data-shape="yellow-rectangle">
+                                    🟡
+                                </div>
+                            </div>
+                            
+                            <div id="puzzle-feedback" style="margin-top: 15px; font-weight: bold;"></div>
+                        </div>
+                        <button class="btn btn-primary" onclick="resetPuzzleGame()">Mulai Ulang</button>
+                    </div>
+                </div>
+                
+                <!-- Game 2: Memory Game -->
+                <div class="game-container">
+                    <div class="game-header">
+                        <h3>Game Memori</h3>
+                        <span id="memory-score">Pasangan: 0/6</span>
+                    </div>
+                    <div class="game-content">
+                        <p>Temukan pasangan gambar yang sama!</p>
+                        <div class="memory-game" id="memory-game">
+                            <!-- Memory cards will be generated by JavaScript -->
+                        </div>
+                        <button class="btn btn-primary" onclick="startMemoryGame()">Mulai Game</button>
+                    </div>
+                </div>
+                
+                <!-- Game 3: Color Mixer -->
+                <div class="game-container">
+                    <div class="game-header">
+                        <h3>Pencampur Warna</h3>
+                        <span id="color-target">Target: Merah</span>
+                    </div>
+                    <div class="game-content">
+                        <p>Campur warna untuk mencapai warna target!</p>
+                        <div class="color-mixer">
+                            <div class="color-display" id="color-display"></div>
+                            <div class="color-sliders">
+                                <div class="slider-container">
+                                    <label>Merah:</label>
+                                    <input type="range" min="0" max="255" value="255" class="slider" id="red-slider" oninput="updateColor()">
+                                    <span id="red-value">255</span>
+                                </div>
+                                <div class="slider-container">
+                                    <label>Hijau:</label>
+                                    <input type="range" min="0" max="255" value="0" class="slider" id="green-slider" oninput="updateColor()">
+                                    <span id="green-value">0</span>
+                                </div>
+                                <div class="slider-container">
+                                    <label>Biru:</label>
+                                    <input type="range" min="0" max="255" value="0" class="slider" id="blue-slider" oninput="updateColor()">
+                                    <span id="blue-value">0</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" onclick="checkColorMatch()">Periksa</button>
+                    </div>
+                </div>
+
+                <!-- Original Activities -->
+                <div class="activities-grid">
+                    <div class="activity-card">
+                        <div class="activity-image">
+                            <i class="fas fa-shapes"></i>
+                        </div>
+                        <div class="activity-content">
+                            <h3>Mengenal Bentuk dan Warna</h3>
+                            <p>Belajar mengenal berbagai bentuk dan warna melalui permainan interaktif dengan animasi menarik.</p>
+                            <div class="activity-tags">
+                                <span class="tag">Visual</span>
+                                <span class="tag">Kognitif</span>
+                                <span class="tag">Dasar</span>
+                            </div>
+                            <button class="btn btn-primary">Mulai Aktivitas</button>
+                        </div>
+                    </div>
+                    <div class="activity-card">
+                        <div class="activity-image">
+                            <i class="fas fa-sort-alpha-down"></i>
+                        </div>
+                        <div class="activity-content">
+                            <h3>Belajar Huruf dan Angka</h3>
+                            <p>Pengenalan huruf dan angka dengan metode multisensori yang menyenangkan dan mudah dipahami.</p>
+                            <div class="activity-tags">
+                                <span class="tag">Bahasa</span>
+                                <span class="tag">Matematika</span>
+                                <span class="tag">Dasar</span>
+                            </div>
+                            <button class="btn btn-primary">Mulai Aktivitas</button>
+                        </div>
+                    </div>
+                    <div class="activity-card">
+                        <div class="activity-image">
+                            <i class="fas fa-hands"></i>
+                        </div>
+                        <div class="activity-content">
+                            <h3>Keterampilan Motorik</h3>
+                            <p>Latihan untuk meningkatkan koordinasi motorik halus dan kasar dengan panduan visual yang jelas.</p>
+                            <div class="activity-tags">
+                                <span class="tag">Motorik</span>
+                                <span class="tag">Fisik</span>
+                                <span class="tag">Koordinasi</span>
+                            </div>
+                            <button class="btn btn-primary">Mulai Aktivitas</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Panduan Page -->
+    <div id="panduan" class="page">
+        <section class="section">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Panduan untuk Orang Tua dan Guru</h2>
+                    <p>Tips dan strategi untuk mendukung perkembangan anak berkebutuhan khusus</p>
+                </div>
+                
+                <div class="guide-categories">
+                    <div class="guide-category active" onclick="showGuideCategory('parenting')">Tips Parenting</div>
+                    <div class="guide-category" onclick="showGuideCategory('learning')">Modul Belajar</div>
+                    <div class="guide-category" onclick="showGuideCategory('environment')">Lingkungan Ramah</div>
+                </div>
+                
+                <div class="guide-content active" id="parenting-guide">
+                    <div class="guide-item">
+                        <h3>Membangun Rutinitas yang Konsisten</h3>
+                        <p>Anak dengan kebutuhan khusus seringkali merasa lebih aman dan nyaman dengan rutinitas yang dapat diprediksi. Buat jadwal harian yang konsisten untuk aktivitas seperti makan, bermain, belajar, dan tidur.</p>
+                    </div>
+                    <div class="guide-item">
+                        <h3>Komunikasi yang Jelas dan Sederhana</h3>
+                        <p>Gunakan kalimat pendek dan sederhana saat berkomunikasi. Berikan instruksi satu per satu dan berikan waktu bagi anak untuk memproses informasi.</p>
+                    </div>
+                    <div class="guide-item">
+                        <h3>Mengelola Perilaku dengan Pendekatan Positif</h3>
+                        <p>Fokus pada perilaku yang diinginkan dengan memberikan pujian dan penguatan positif. Hindari hukuman fisik dan gunakan time-out atau konsekuensi logis sebagai alternatif.</p>
+                    </div>
+                </div>
+                
+                <div class="guide-content" id="learning-guide">
+                    <div class="guide-item">
+                        <h3>Pembelajaran Multisensori</h3>
+                        <p>Gunakan berbagai indera dalam proses belajar. Gabungkan visual, auditori, dan kinestetik untuk membantu anak memahami konsep dengan lebih baik.</p>
+                    </div>
+                    <div class="guide-item">
+                        <h3>Menggunakan Minat Khusus sebagai Motivasi</h3>
+                        <p>Identifikasi minat khusus anak dan integrasikan ke dalam kegiatan belajar. Ini dapat meningkatkan motivasi dan keterlibatan dalam proses pembelajaran.</p>
+                    </div>
+                    <div class="guide-item">
+                        <h3>Membagi Tugas menjadi Langkah-Langkah Kecil</h3>
+                        <p>Bagi tugas kompleks menjadi langkah-langkah kecil yang dapat dikelola. Berikan panduan dan dukungan untuk setiap langkah sampai anak dapat melakukannya secara mandiri.</p>
+                    </div>
+                </div>
+                
+                <div class="guide-content" id="environment-guide">
+                    <div class="guide-item">
+                        <h3>Menciptakan Ruang Belajar yang Tenang</h3>
+                        <p>Rancang ruang belajar dengan pencahayaan yang cukup, minim distraksi visual dan auditori, serta furnitur yang nyaman dan sesuai dengan kebutuhan anak.</p>
+                    </div>
+                    <div class="guide-item">
+                        <h3>Organisasi yang Visual</h3>
+                        <p>Gunakan gambar, simbol, atau warna untuk membantu anak memahami rutinitas dan organisasi ruang. Labeli area dan benda dengan gambar untuk memudahkan navigasi.</p>
+                    </div>
+                    <div class="guide-item">
+                        <h3>Zona Sensorik yang Aman</h3>
+                        <p>Sediakan area khusus dengan berbagai tekstur, suara, dan aktivitas sensorik yang dapat membantu anak mengatur diri ketika merasa kewalahan atau stres.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Layanan Page -->
+    <div id="layanan" class="page">
+        <section class="section">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Layanan untuk ABK</h2>
+                    <p>Rekomendasi sekolah, terapi, dan klinik untuk mendukung perkembangan anak</p>
+                </div>
+                
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-school"></i>
+                        </div>
+                        <h3>Sekolah Inklusif</h3>
+                        <p>Sekolah reguler yang menyediakan pendidikan untuk semua anak, termasuk ABK, dengan dukungan khusus.</p>
+                        <ul class="service-list">
+                            <li>Sekolah Inklusif Jakarta</li>
+                            <li>Sekolah Inklusif Bandung</li>
+                            <li>Sekolah Inklusif Surabaya</li>
+                            <li>Sekolah Inklusif Yogyakarta</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-user-graduate"></i>
+                        </div>
+                        <h3>Sekolah Luar Biasa (SLB)</h3>
+                        <p>Sekolah khusus yang dirancang untuk anak dengan kebutuhan khusus tertentu.</p>
+                        <ul class="service-list">
+                            <li>SLB Autisme</li>
+                            <li>SLB Tuna Rungu</li>
+                            <li>SLB Tuna Netra</li>
+                            <li>SLB Tuna Grahita</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-hand-holding-heart"></i>
+                        </div>
+                        <h3>Terapi</h3>
+                        <p>Berbagai jenis terapi untuk mendukung perkembangan anak sesuai kebutuhannya.</p>
+                        <ul class="service-list">
+                            <li>Terapi Wicara</li>
+                            <li>Terapi Okupasi</li>
+                            <li>Terapi Sensori Integrasi</li>
+                            <li>Terapi Perilaku</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-hospital"></i>
+                        </div>
+                        <h3>Klinik Tumbuh Kembang</h3>
+                        <p>Fasilitas kesehatan yang menyediakan layanan diagnostik dan intervensi untuk masalah tumbuh kembang.</p>
+                        <ul class="service-list">
+                            <li>Klinik Tumbuh Kembang Anak RS Cipto</li>
+                            <li>Klinik Anak Berkebutuhan Khusus RS Harapan Kita</li>
+                            <li>Pusat Layanan Autisme</li>
+                            <li>Klinik Disleksia Indonesia</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-hands-helping"></i>
+                        </div>
+                        <h3>Layanan Pemerintah</h3>
+                        <p>Layanan dan program pemerintah untuk mendukung anak berkebutuhan khusus dan keluarganya.</p>
+                        <ul class="service-list">
+                            <li>Dinas Sosial (Dinsos)</li>
+                            <li>Dinas Kesehatan (Dinkes)</li>
+                            <li>Kartu Indonesia Pintar (KIP)</li>
+                            <li>Program Rehabilitasi Sosial</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3>Komunitas dan Support Group</h3>
+                        <p>Kelompok dukungan untuk orang tua dan keluarga anak berkebutuhan khusus.</p>
+                        <ul class="service-list">
+                            <li>Komunitas Peduli Autisme Indonesia</li>
+                            <li>Support Group ADHD Indonesia</li>
+                            <li>Yayasan Disleksia Indonesia</li>
+                            <li>Forum Orang Tua Anak Berkebutuhan Khusus</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Progress Page -->
+    <div id="progress" class="page">
+        <section class="section">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Progress Belajar</h2>
+                    <p>Pantau perkembangan anak Anda dengan sistem pelacakan yang komprehensif dan visual</p>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-header">
+                        <h3>Kemampuan Kognitif</h3>
+                        <span>75%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 75%"></div>
+                    </div>
+                    <div class="progress-info">
+                        <span>Mulai: 1 Jan 2023</span>
+                        <span>Target: 90%</span>
+                    </div>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-header">
+                        <h3>Kemampuan Bahasa</h3>
+                        <span>60%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 60%"></div>
+                    </div>
+                    <div class="progress-info">
+                        <span>Mulai: 1 Jan 2023</span>
+                        <span>Target: 85%</span>
+                    </div>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-header">
+                        <h3>Keterampilan Sosial</h3>
+                        <span>50%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 50%"></div>
+                    </div>
+                    <div class="progress-info">
+                        <span>Mulai: 1 Jan 2023</span>
+                        <span>Target: 80%</span>
+                    </div>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-header">
+                        <h3>Kemampuan Motorik</h3>
+                        <span>70%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 70%"></div>
+                    </div>
+                    <div class="progress-info">
+                        <span>Mulai: 1 Jan 2023</span>
+                        <span>Target: 85%</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Sumber Belajar Page -->
+    <div id="sumber-belajar" class="page">
+        <section class="section resources-section">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Sumber Belajar</h2>
+                    <p>Rekomendasi sumber belajar tambahan untuk mendukung perkembangan anak</p>
+                </div>
+                <div class="resources-grid">
+                    <div class="resource-card">
+                        <div class="resource-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="resource-info">
+                            <h3>Buku Panduan</h3>
+                            <p>Koleksi buku panduan untuk orang tua dan pendidik</p>
+                        </div>
+                    </div>
+                    <div class="resource-card">
+                        <div class="resource-icon">
+                            <i class="fas fa-video"></i>
+                        </div>
+                        <div class="resource-info">
+                            <h3>Video Tutorial</h3>
+                            <p>Video panduan untuk aktivitas belajar di rumah</p>
+                        </div>
+                    </div>
+                    <div class="resource-card">
+                        <div class="resource-icon">
+                            <i class="fas fa-file-pdf"></i>
+                        </div>
+                        <div class="resource-info">
+                            <h3>Worksheet</h3>
+                            <p>Lembar kerja yang dapat diunduh dan dicetak</p>
+                        </div>
+                    </div>
+                    <div class="resource-card">
+                        <div class="resource-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <div class="resource-info">
+                            <h3>Jadwal Terstruktur</h3>
+                            <p>Template jadwal harian untuk anak</p>
+                        </div>
+                    </div>
+                    <div class="resource-card">
+                        <div class="resource-icon">
+                            <i class="fas fa-images"></i>
+                        </div>
+                        <div class="resource-info">
+                            <h3>Kartu Flash</h3>
+                            <p>Kartu bergambar untuk pembelajaran visual</p>
+                        </div>
+                    </div>
+                    <div class="resource-card">
+                        <div class="resource-icon">
+                            <i class="fas fa-podcast"></i>
+                        </div>
+                        <div class="resource-info">
+                            <h3>Audio Story</h3>
+                            <p>Cerita audio untuk melatih kemampuan mendengar</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Komunitas Page -->
+    <div id="komunitas" class="page">
+        <section class="section community-section">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Komunitas Orang Tua</h2>
+                    <p>Bergabunglah dengan komunitas orang tua untuk berbagi pengalaman dan tips</p>
+                </div>
+                <div class="community-grid">
+                    <div class="community-card">
+                        <div class="community-icon">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <h3>Forum Diskusi</h3>
+                        <p>Diskusikan tantangan dan solusi dengan orang tua lain</p>
+                    </div>
+                    <div class="community-card">
+                        <div class="community-icon">
+                            <i class="fas fa-user-friends"></i>
+                        </div>
+                        <h3>Grup Dukungan</h3>
+                        <p>Temukan dukungan emosional dari sesama orang tua</p>
+                    </div>
+                    <div class="community-card">
+                        <div class="community-icon">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <h3>Event Online</h3>
+                        <p>Ikuti webinar dan workshop dengan ahli</p>
+                    </div>
+                </div>
+
+                <div class="forum-section">
+                    <div class="forum-container">
+                        <div class="forum-header">
+                            <h3>Topik Terkini</h3>
+                            <button class="btn btn-primary">Buat Topik Baru</button>
+                        </div>
+                        <div class="forum-topic">
+                            <h4>Tips Mengatasi Tantrum pada Anak Autis</h4>
+                            <div class="forum-meta">
+                                <span><i class="fas fa-user"></i> Ibu Sari</span>
+                                <span><i class="fas fa-comment"></i> 24 komentar</span>
+                                <span><i class="fas fa-clock"></i> 2 jam lalu</span>
+                            </div>
+                        </div>
+                        <div class="forum-topic">
+                            <h4>Rekomendasi Sekolah Inklusi di Jakarta</h4>
+                            <div class="forum-meta">
+                                <span><i class="fas fa-user"></i> Bpk Andi</span>
+                                <span><i class="fas fa-comment"></i> 18 komentar</span>
+                                <span><i class="fas fa-clock"></i> 1 hari lalu</span>
+                            </div>
+                        </div>
+                        <div class="forum-topic">
+                            <h4>Pengalaman Terapi Okupasi untuk Anak ADHD</h4>
+                            <div class="forum-meta">
+                                <span><i class="fas fa-user"></i> Ibu Maya</span>
+                                <span><i class="fas fa-comment"></i> 32 komentar</span>
+                                <span><i class="fas fa-clock"></i> 3 hari lalu</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Lumina</h3>
+                    <p>Platform edukasi modern untuk anak berkebutuhan khusus dengan pendekatan yang menyenangkan dan sesuai kebutuhan individu.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Tautan Cepat</h3>
+                    <ul>
+                        <li><a href="#" onclick="showPage('beranda')">Beranda</a></li>
+                        <li><a href="#" onclick="showPage('informasi')">Informasi</a></li>
+                        <li><a href="#" onclick="showPage('aktivitas')">Aktivitas</a></li>
+                        <li><a href="#" onclick="showPage('panduan')">Panduan</a></li>
+                        <li><a href="#" onclick="showPage('layanan')">Layanan</a></li>
+                        <li><a href="#" onclick="showPage('progress')">Progress</a></li>
+                        <li><a href="#" onclick="showPage('sumber-belajar')">Sumber Belajar</a></li>
+                        <li><a href="#" onclick="showPage('komunitas')">Komunitas</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Dukungan</h3>
+                    <ul>
+                        <li><a href="#">Bantuan</a></li>
+                        <li><a href="#">Konsultasi Ahli</a></li>
+                        <li><a href="#">Komunitas</a></li>
+                        <li><a href="#">Kebijakan Privasi</a></li>
+                        <li><a href="#">Syarat & Ketentuan</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Kontak</h3>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> luminabersamaabk@gmail.com</li>
+                        <li><i class="fas fa-phone"></i> +62 858-1153-6707 Kak AT</li>
+                        <li><i class="fas fa-phone"></i> +62 811-1380-1274 Kak NS</li>
+                        <li><i class="fas fa-phone"></i> +62 812-8136-1686 Kak MG</li>
+                        <li><i class="fas fa-phone"></i> +62 823-5333-7708 Kak LF</li>
+                        <li><i class="fas fa-phone"></i> +62 812-9693-5375 Kak LL</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Jakarta, Indonesia</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 Lumina. Semua hak dilindungi.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Fungsi untuk menampilkan halaman yang dipilih
+        function showPage(pageId) {
+            // Sembunyikan semua halaman
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Tampilkan halaman yang dipilih
+            document.getElementById(pageId).classList.add('active');
+            
+            // Update navigasi aktif
+            const navLinks = document.querySelectorAll('nav a');
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('onclick') === `showPage('${pageId}')`) {
+                    link.classList.add('active');
+                }
+            });
+            
+            // Scroll ke atas
+            window.scrollTo(0, 0);
+            
+            // Animasi progress bar jika halaman progress
+            if (pageId === 'progress') {
+                animateProgressBars();
+            }
+            
+            // Tutup dropdown menu
+            document.getElementById('dropdownContent').classList.remove('show');
+            
+            return false; // Mencegah perilaku default link
+        }
+
+        // Fungsi untuk menampilkan kategori panduan
+        function showGuideCategory(category) {
+            // Sembunyikan semua konten panduan
+            const guideContents = document.querySelectorAll('.guide-content');
+            guideContents.forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Tampilkan konten yang dipilih
+            document.getElementById(`${category}-guide`).classList.add('active');
+            
+            // Update kategori aktif
+            const guideCategories = document.querySelectorAll('.guide-category');
+            guideCategories.forEach(cat => {
+                cat.classList.remove('active');
+            });
+            
+            // Aktifkan kategori yang dipilih
+            event.target.classList.add('active');
+        }
+
+        // Inisialisasi progress bars
+        function animateProgressBars() {
+            const progressBars = document.querySelectorAll('.progress-fill');
+            
+            progressBars.forEach(bar => {
+                const width = bar.style.width;
+                bar.style.width = '0';
+                setTimeout(() => {
+                    bar.style.width = width;
+                }, 300);
+            });
+        }
+
+        // Artikel ABK
+        const articles = {
+            'autisme': {
+                title: 'Memahami Autisme: Panduan Lengkap untuk Orang Tua',
+                content: `
+                    <h3>Apa itu Autisme?</h3>
+                    <p>Autisme Spectrum Disorder (ASD) adalah gangguan perkembangan saraf yang mempengaruhi cara seseorang berkomunikasi, berinteraksi sosial, dan berperilaku. Autisme disebut sebagai "spectrum" karena gejalanya bervariasi dari ringan hingga berat dan mempengaruhi setiap individu dengan cara yang berbeda.</p>
+                    
+                    <h3>Karakteristik Utama Autisme</h3>
+                    <ul>
+                        <li><strong>Kesulitan Komunikasi Sosial:</strong> Anak dengan autisme mungkin mengalami kesulitan memahami bahasa tubuh, ekspresi wajah, nada suara, dan konteks sosial.</li>
+                        <li><strong>Perilaku Berulang:</strong> Mereka sering melakukan gerakan atau perilaku berulang seperti mengepakkan tangan, berputar, atau mengulangi kata-kata tertentu.</li>
+                        <li><strong>Minat Terbatas:</strong> Anak autisme biasanya memiliki minat yang sangat spesifik dan intens terhadap topik tertentu.</li>
+                        <li><strong>Perubahan Rutin:</strong> Mereka sering merasa sangat terganggu dengan perubahan dalam rutinitas harian mereka.</li>
+                    </ul>
+                    
+                    <h3>Strategi Pendukung untuk Anak Autisme</h3>
+                    <p>Berikut beberapa strategi yang dapat membantu perkembangan anak dengan autisme:</p>
+                    <ul>
+                        <li>Gunakan jadwal visual untuk membantu anak memahami rutinitas harian</li>
+                        <li>Berikan instruksi yang jelas dan konkret</li>
+                        <li>Gunakan minat khusus anak sebagai motivasi belajar</li>
+                        <li>Ciptakan lingkungan yang terstruktur dan dapat diprediksi</li>
+                        <li>Berikan waktu transisi yang cukup antara aktivitas</li>
+                    </ul>
+                    
+                    <h3>Terapi dan Intervensi</h3>
+                    <p>Beberapa terapi yang dapat membantu anak autisme meliputi:</p>
+                    <ul>
+                        <li>Terapi Perilaku (ABA - Applied Behavior Analysis)</li>
+                        <li>Terapi Wicara dan Bahasa</li>
+                        <li>Terapi Okupasi</li>
+                        <li>Terapi Sosial dan Emosional</li>
+                        <li>Intervensi Berbasis Keluarga</li>
+                    </ul>
+                `
+            },
+            'adhd': {
+                title: 'ADHD: Memahami dan Mengelola Gangguan Pemusatan Perhatian',
+                content: `
+                    <h3>Pengertian ADHD</h3>
+                    <p>Attention-Deficit/Hyperactivity Disorder (ADHD) adalah gangguan neurodevelopmental yang ditandai dengan pola berkelanjutan dari ketidakmampuan memusatkan perhatian, hiperaktif, dan impulsivitas yang mengganggu fungsi atau perkembangan.</p>
+                    
+                    <h3>Tiga Tipe Utama ADHD</h3>
+                    <ul>
+                        <li><strong>Tipe Inatentif:</strong> Kesulitan mempertahankan perhatian, mudah teralih, sering lupa, dan kesulitan mengorganisir tugas.</li>
+                        <li><strong>Tipe Hiperaktif-Impulsif:</strong> Gelisah, banyak bicara, sulit duduk diam, dan bertindak tanpa berpikir.</li>
+                        <li><strong>Tipe Kombinasi:</strong> Memiliki gejala dari kedua tipe di atas.</li>
+                    </ul>
+                    
+                    <h3>Strategi untuk Mendukung Anak ADHD</h3>
+                    <p>Berikut strategi yang dapat membantu anak dengan ADHD:</p>
+                    <ul>
+                        <li>Buat rutinitas yang konsisten dan terstruktur</li>
+                        <li>Bagi tugas besar menjadi langkah-langkah kecil</li>
+                        <li>Gunakan penguat positif untuk perilaku yang diinginkan</li>
+                        <li>Sediakan lingkungan belajar yang minim distraksi</li>
+                        <li>Berikan istirahat singkat selama aktivitas yang membutuhkan konsentrasi</li>
+                        <li>Gunakan timer visual untuk membantu manajemen waktu</li>
+                    </ul>
+                    
+                    <h3>Intervensi dan Pengobatan</h3>
+                    <p>Penanganan ADHD biasanya melibatkan pendekatan multimodal:</p>
+                    <ul>
+                        <li>Terapi perilaku dan kognitif</li>
+                        <li>Pelatihan keterampilan sosial</li>
+                        <li>Intervensi pendidikan khusus</li>
+                        <li>Obat-obatan (atas rekomendasi dokter)</li>
+                        <li>Pelatihan orang tua dan dukungan keluarga</li>
+                    </ul>
+                `
+            },
+            'disleksia': {
+                title: 'Disleksia: Memahami Gangguan Belajar Spesifik',
+                content: `
+                    <h3>Apa itu Disleksia?</h3>
+                    <p>Disleksia adalah gangguan belajar spesifik yang bersifat neurologis, ditandai dengan kesulitan dalam mengenali kata dengan tepat dan/atau lancar, mengeja, dan mengodekan kemampuan. Disleksia tidak berhubungan dengan tingkat kecerdasan seseorang.</p>
+                    
+                    <h3>Tanda-tanda Disleksia</h3>
+                    <ul>
+                        <li>Kesulitan membedakan huruf yang mirip (b-d, p-q, m-n)</li>
+                        <li>Membaca dengan lambat dan penuh usaha</li>
+                        <li>Sering terbalik dalam menulis huruf atau angka</li>
+                        <li>Kesulitan mengingat urutan (hari, bulan, alfabet)</li>
+                        <li>Menghindari aktivitas yang melibatkan membaca</li>
+                        <li>Kesulitan memahami apa yang dibaca</li>
+                    </ul>
+                    
+                    <h3>Strategi Pembelajaran untuk Anak Disleksia</h3>
+                    <p>Pendekatan multisensori sangat efektif untuk anak disleksia:</p>
+                    <ul>
+                        <li>Gunakan metode fonik yang sistematis</li>
+                        <li>Integrasikan pembelajaran visual, auditori, dan kinestetik</li>
+                        <li>Berikan waktu ekstra untuk menyelesaikan tugas</li>
+                        <li>Gunakan teknologi bantu (text-to-speech, audiobook)</li>
+                        <li>Fokus pada kekuatan dan bakat anak di area lain</li>
+                    </ul>
+                    
+                    <h3>Dukungan di Sekolah dan Rumah</h3>
+                    <p>Anak disleksia membutuhkan dukungan yang konsisten:</p>
+                    <ul>
+                        <li>Kerjasama antara orang tua, guru, dan terapis</li>
+                        <li>Akomodasi di kelas (waktu tambahan, tugas yang dimodifikasi)</li>
+                        <li>Penguatan positif untuk usaha dan kemajuan</li>
+                        <li>Membantu mengembangkan strategi kompensasi</li>
+                        <li>Mendorong minat dan bakat di luar akademik</li>
+                    </ul>
+                `
+            },
+            'cerebral-palsy': {
+                title: 'Cerebral Palsy: Memahami dan Mendukung Anak dengan Gangguan Motorik',
+                content: `
+                    <h3>Pengertian Cerebral Palsy</h3>
+                    <p>Cerebral Palsy (CP) adalah kelompok gangguan yang mempengaruhi gerakan, tonus otot, atau postur yang disebabkan oleh kerusakan yang terjadi pada otak yang belum matang dan sedang berkembang, paling sering sebelum kelahiran.</p>
+                    
+                    <h3>Jenis-jenis Cerebral Palsy</h3>
+                    <ul>
+                        <li><strong>Spastik:</strong> Tonus otot meningkat, menyebabkan kekakuan dan kesulitan bergerak</li>
+                        <li><strong>Diskinetik:</strong> Gerakan tidak terkendali dan tidak terkoordinasi</li>
+                        <li><strong>Ataksik:</strong> Masalah dengan keseimbangan dan koordinasi</li>
+                        <li><strong>Campuran:</strong> Kombinasi dari beberapa jenis di atas</li>
+                    </ul>
+                    
+                    <h3>Dukungan dan Terapi</h3>
+                    <p>Anak dengan CP membutuhkan pendekatan multidisiplin:</p>
+                    <ul>
+                        <li>Terapi fisik untuk meningkatkan kekuatan dan mobilitas</li>
+                        <li>Terapi okupasi untuk membantu aktivitas sehari-hari</li>
+                        <li>Terapi wicara untuk masalah komunikasi dan menelan</li>
+                        <li>Alat bantu mobilitas (kursi roda, walker, orthosis)</li>
+                        <li>Intervensi pendidikan khusus</li>
+                    </ul>
+                    
+                    <h3>Strategi di Rumah dan Sekolah</h3>
+                    <p>Beberapa strategi untuk mendukung anak dengan CP:</p>
+                    <ul>
+                        <li>Modifikasi lingkungan untuk aksesibilitas</li>
+                        <li>Gunakan teknologi asistif untuk komunikasi dan belajar</li>
+                        <li>Beri dukungan emosional dan sosial</li>
+                        <li>Fokus pada kemampuan, bukan keterbatasan</li>
+                        <li>Libatkan anak dalam pengambilan keputusan tentang perawatannya</li>
+                    </ul>
+                `
+            },
+            'tuna-rungu': {
+                title: 'Tuna Rungu: Memahami dan Mendukung Anak dengan Gangguan Pendengaran',
+                content: `
+                    <h3>Memahami Tuna Rungu</h3>
+                    <p>Tuna rungu mengacu pada kondisi kehilangan pendengaran yang mempengaruhi kemampuan seseorang untuk mendengar suara. Tingkat gangguan pendengaran bervariasi dari ringan hingga profound (sangat berat).</p>
+                    
+                    <h3>Tingkat Gangguan Pendengaran</h3>
+                    <ul>
+                        <li><strong>Ringan (20-40 dB):</strong> Kesulitan mendengar percakapan lembut atau dari jarak jauh</li>
+                        <li><strong>Sedang (41-70 dB):</strong> Kesulitan memahami percakapan normal tanpa alat bantu dengar</li>
+                        <li><strong>Berat (71-90 dB):</strong> Hanya dapat mendengar suara sangat keras</li>
+                        <li><strong>Profound (91+ dB):</strong> Tidak dapat mendengar bahkan suara sangat keras</li>
+                    </ul>
+                    
+                    <h3>Komunikasi dan Pendidikan</h3>
+                    <p>Beberapa pendekatan komunikasi untuk anak tuna rungu:</p>
+                    <ul>
+                        <li>Bahasa Isyarat (SIBI - Sistem Isyarat Bahasa Indonesia)</li>
+                        <li>Komunikasi Total (kombinasi bahasa isyarat, oral, dan tulisan)</li>
+                        <li>Metode Oral (mengembangkan kemampuan berbicara dan membaca bibir)</li>
+                        <li>Alat Bantu Dengar dan Implan Koklea</li>
+                    </ul>
+                    
+                    <h3>Strategi Pendukung</h3>
+                    <p>Untuk mendukung anak dengan gangguan pendengaran:</p>
+                    <ul>
+                        <li>Pastikan kontak visual sebelum berbicara</li>
+                        <li>Gunakan ekspresi wajah dan bahasa tubuh yang jelas</li>
+                        <li>Bicara dengan kecepatan normal dan artikulasi jelas</li>
+                        <li>Minimalkan kebisingan latar belakang</li>
+                        <li>Gunakan media visual untuk mendukung pembelajaran</li>
+                        <li>Berikan waktu ekstra untuk memproses informasi</li>
+                    </ul>
+                `
+            },
+            'tuna-netra': {
+                title: 'Tuna Netra: Memahami dan Mendukung Anak dengan Gangguan Penglihatan',
+                content: `
+                    <h3>Memahami Tuna Netra</h3>
+                    <p>Tuna netra mengacu pada kondisi kehilangan penglihatan yang mempengaruhi kemampuan seseorang untuk melihat. Tingkat gangguan penglihatan bervariasi dari low vision (penglihatan rendah) hingga buta total.</p>
+                    
+                    <h3>Tingkat Gangguan Penglihatan</h3>
+                    <ul>
+                        <li><strong>Low Vision:</strong> Masih memiliki sisa penglihatan yang dapat dimanfaatkan dengan alat bantu</li>
+                        <li><strong>Buta Parsial:</strong> Hanya dapat melihat cahaya atau bayangan</li>
+                        <li><strong>Buta Total:</strong> Tidak dapat melihat sama sekali</li>
+                    </ul>
+                    
+                    <h3>Pendidikan dan Keterampilan</h3>
+                    <p>Anak tuna netra membutuhkan keterampilan khusus:</p>
+                    <ul>
+                        <li>Braille untuk membaca dan menulis</li>
+                        <li>Orientasi dan Mobilitas (penggunaan tongkat, navigasi)</li>
+                        <li>Keterampilan Kehidupan Sehari-hari (ADL)</li>
+                        <li>Teknologi Asistif (screen reader, perangkat braille)</li>
+                        <li>Pengembangan indera pendengaran dan peraba</li>
+                    </ul>
+                    
+                    <h3>Strategi Pendukung</h3>
+                    <p>Untuk mendukung anak dengan gangguan penglihatan:</p>
+                    <ul>
+                        <li>Beri deskripsi verbal yang jelas tentang lingkungan</li>
+                        <li>Gunakan materi taktil dan auditori dalam pembelajaran</li>
+                        <li>Jaga konsistensi penataan ruangan dan benda</li>
+                        <li>Latih kemandirian sejak dini</li>
+                        <li>Fasilitasi interaksi sosial dengan teman sebaya</li>
+                        <li>Gunakan kontras warna yang jelas untuk anak low vision</li>
+                    </ul>
+                `
+            }
+        };
+
+        // Fungsi untuk menampilkan artikel
+        function showArticle(articleId) {
+            const article = articles[articleId];
+            if (article) {
+                document.getElementById('article-title').textContent = article.title;
+                document.getElementById('article-content').innerHTML = article.content;
+                document.querySelector('.info-grid').style.display = 'none';
+                document.getElementById('articles-section').style.display = 'block';
+                window.scrollTo(0, 0);
+            }
+        }
+
+        // Fungsi untuk menyembunyikan artikel
+        function hideArticle() {
+            document.querySelector('.info-grid').style.display = 'grid';
+            document.getElementById('articles-section').style.display = 'none';
+        }
+
+        // Game Functions - PUZZLE GAME
+        function initializePuzzleGame() {
+            const shapes = document.querySelectorAll('.draggable-shape');
+            const slots = document.querySelectorAll('.shape-slot');
+            
+            // Add drag event listeners to shapes
+            shapes.forEach(shape => {
+                shape.addEventListener('dragstart', handleDragStart);
+                shape.addEventListener('dragend', handleDragEnd);
+            });
+            
+            // Add drop event listeners to slots
+            slots.forEach(slot => {
+                slot.addEventListener('dragover', handleDragOver);
+                slot.addEventListener('drop', handleDrop);
+            });
+        }
+
+        function handleDragStart(e) {
+            e.dataTransfer.setData('text/plain', e.target.dataset.shape);
+            e.target.classList.add('dragging');
+            setTimeout(() => {
+                e.target.style.display = 'none';
+            }, 0);
+        }
+
+        function handleDragEnd(e) {
+            e.target.classList.remove('dragging');
+            e.target.style.display = 'flex';
+        }
+
+        function handleDragOver(e) {
+            e.preventDefault();
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            const shapeType = e.dataTransfer.getData('text/plain');
+            const slot = e.target.closest('.shape-slot');
+            
+            if (slot && slot.dataset.shape === shapeType) {
+                // Correct match
+                slot.classList.add('correct');
+                slot.innerHTML = document.querySelector(`[data-shape="${shapeType}"]`).innerHTML;
+                slot.style.border = '3px solid #4CAF50';
+                slot.style.backgroundColor = 'rgba(76, 175, 80, 0.1)';
+                
+                // Hide the dragged shape
+                const draggedShape = document.querySelector(`[data-shape="${shapeType}"]`);
+                draggedShape.style.display = 'none';
+                
+                // Check if all shapes are placed
+                checkPuzzleCompletion();
+            } else {
+                // Incorrect match
+                document.getElementById('puzzle-feedback').textContent = 'Coba lagi! Bentuk tidak sesuai.';
+                document.getElementById('puzzle-feedback').style.color = '#f44336';
+                
+                setTimeout(() => {
+                    document.getElementById('puzzle-feedback').textContent = '';
+                }, 2000);
+            }
+        }
+
+        function checkPuzzleCompletion() {
+            const correctSlots = document.querySelectorAll('.shape-slot.correct');
+            if (correctSlots.length === 3) {
+                document.getElementById('puzzle-feedback').textContent = 'Selamat! Anda berhasil menyelesaikan puzzle!';
+                document.getElementById('puzzle-feedback').style.color = '#4CAF50';
+            }
+        }
+
+        function resetPuzzleGame() {
+            const shapes = document.querySelectorAll('.draggable-shape');
+            const slots = document.querySelectorAll('.shape-slot');
+            
+            // Reset shapes
+            shapes.forEach(shape => {
+                shape.style.display = 'flex';
+            });
+            
+            // Reset slots
+            slots.forEach(slot => {
+                slot.classList.remove('correct');
+                slot.style.border = '3px dashed #ccc';
+                slot.style.backgroundColor = 'transparent';
+                slot.innerHTML = `<span>${getSlotText(slot.dataset.shape)}</span>`;
+            });
+            
+            // Clear feedback
+            document.getElementById('puzzle-feedback').textContent = '';
+        }
+
+        function getSlotText(shapeType) {
+            const texts = {
+                'red-square': '🔴 Kotak Merah',
+                'blue-circle': '🔵 Lingkaran Biru', 
+                'yellow-rectangle': '🟡 Persegi Panjang Kuning'
+            };
+            return texts[shapeType] || 'Tempatkan bentuk di sini';
+        }
+
+        // Game Functions - MEMORY GAME
+        function startMemoryGame() {
+            const memoryGame = document.getElementById('memory-game');
+            memoryGame.innerHTML = '';
+            
+            const symbols = ['🍎', '🍌', '🍒', '🍇', '🍊', '🍓'];
+            const cards = [...symbols, ...symbols];
+            
+            // Shuffle cards
+            cards.sort(() => Math.random() - 0.5);
+            
+            cards.forEach(symbol => {
+                const card = document.createElement('div');
+                card.className = 'memory-card';
+                card.textContent = '?';
+                card.dataset.symbol = symbol;
+                card.addEventListener('click', flipCard);
+                memoryGame.appendChild(card);
+            });
+            
+            document.getElementById('memory-score').textContent = 'Pasangan: 0/6';
+            flippedCards = [];
+            matchedPairs = 0;
+        }
+
+        let flippedCards = [];
+        let matchedPairs = 0;
+
+        function flipCard() {
+            if (flippedCards.length < 2 && !this.classList.contains('flipped') && !this.classList.contains('matched')) {
+                this.classList.add('flipped');
+                this.textContent = this.dataset.symbol;
+                flippedCards.push(this);
+                
+                if (flippedCards.length === 2) {
+                    setTimeout(checkMatch, 1000);
+                }
+            }
+        }
+
+        function checkMatch() {
+            const [card1, card2] = flippedCards;
+            
+            if (card1.dataset.symbol === card2.dataset.symbol) {
+                card1.classList.add('matched');
+                card2.classList.add('matched');
+                matchedPairs++;
+                document.getElementById('memory-score').textContent = `Pasangan: ${matchedPairs}/6`;
+                
+                if (matchedPairs === 6) {
+                    setTimeout(() => {
+                        alert('Selamat! Anda menemukan semua pasangan!');
+                    }, 500);
+                }
+            } else {
+                card1.classList.remove('flipped');
+                card2.classList.remove('flipped');
+                card1.textContent = '?';
+                card2.textContent = '?';
+            }
+            
+            flippedCards = [];
+        }
+
+        // Game Functions - COLOR MIXER
+        function updateColor() {
+            const red = document.getElementById('red-slider').value;
+            const green = document.getElementById('green-slider').value;
+            const blue = document.getElementById('blue-slider').value;
+            
+            document.getElementById('red-value').textContent = red;
+            document.getElementById('green-value').textContent = green;
+            document.getElementById('blue-value').textContent = blue;
+            
+            document.getElementById('color-display').style.background = `rgb(${red}, ${green}, ${blue})`;
+        }
+
+        let currentTarget = 'Merah';
+        const targets = ['Merah', 'Hijau', 'Biru', 'Kuning', 'Ungu', 'Oranye'];
+
+        function checkColorMatch() {
+            const red = parseInt(document.getElementById('red-slider').value);
+            const green = parseInt(document.getElementById('green-slider').value);
+            const blue = parseInt(document.getElementById('blue-slider').value);
+            
+            let isMatch = false;
+            
+            switch(currentTarget) {
+                case 'Merah':
+                    isMatch = (red > 200 && green < 100 && blue < 100);
+                    break;
+                case 'Hijau':
+                    isMatch = (red < 100 && green > 200 && blue < 100);
+                    break;
+                case 'Biru':
+                    isMatch = (red < 100 && green < 100 && blue > 200);
+                    break;
+                case 'Kuning':
+                    isMatch = (red > 200 && green > 200 && blue < 100);
+                    break;
+                case 'Ungu':
+                    isMatch = (red > 150 && green < 100 && blue > 150);
+                    break;
+                case 'Oranye':
+                    isMatch = (red > 200 && green > 100 && green < 150 && blue < 50);
+                    break;
+            }
+            
+            if (isMatch) {
+                alert(`Hebat! Anda berhasil membuat warna ${currentTarget}!`);
+                // Set next target
+                const currentIndex = targets.indexOf(currentTarget);
+                const nextIndex = (currentIndex + 1) % targets.length;
+                currentTarget = targets[nextIndex];
+                document.getElementById('color-target').textContent = `Target: ${currentTarget}`;
+                
+                // Reset sliders for next challenge
+                document.getElementById('red-slider').value = 128;
+                document.getElementById('green-slider').value = 128;
+                document.getElementById('blue-slider').value = 128;
+                updateColor();
+            } else {
+                alert('Coba lagi! Gunakan slider untuk menyesuaikan warna.');
+            }
+        }
+
+        // Initialize games when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize puzzle game
+            initializePuzzleGame();
+            
+            // Initialize color mixer
+            updateColor();
+            
+            // Text-to-Speech
+            const textToSpeechBtn = document.getElementById('textToSpeechBtn');
+            let isTextToSpeechActive = false;
+            let speechSynthesis = window.speechSynthesis;
+            
+            textToSpeechBtn.addEventListener('click', function() {
+                isTextToSpeechActive = !isTextToSpeechActive;
+                this.classList.toggle('active');
+                
+                if (isTextToSpeechActive) {
+                    // Aktifkan text-to-speech
+                    const pageContent = document.querySelector('.page.active').innerText;
+                    const utterance = new SpeechSynthesisUtterance(pageContent);
+                    utterance.lang = 'id-ID';
+                    speechSynthesis.speak(utterance);
+                } else {
+                    // Nonaktifkan text-to-speech
+                    speechSynthesis.cancel();
+                }
+            });
+            
+            // Mode Disleksia
+            const dyslexiaModeBtn = document.getElementById('dyslexiaModeBtn');
+            dyslexiaModeBtn.addEventListener('click', function() {
+                document.body.classList.toggle('dyslexia-mode');
+                this.classList.toggle('active');
+            });
+            
+            // Dropdown Menu
+            const menuBtn = document.getElementById('menuBtn');
+            const dropdownContent = document.getElementById('dropdownContent');
+            
+            menuBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                dropdownContent.classList.toggle('show');
+            });
+            
+            // Tutup dropdown ketika klik di luar
+            document.addEventListener('click', function() {
+                dropdownContent.classList.remove('show');
+            });
+            
+            // Button interactions
+            const buttons = document.querySelectorAll('.btn');
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                    }, 150);
+                });
+            });
+            
+            // Animasi progress bar saat halaman progress aktif
+            if (document.getElementById('progress').classList.contains('active')) {
+                animateProgressBars();
+            }
+        });
+    </script>
+</body>
+</html>
